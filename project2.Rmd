@@ -5,7 +5,7 @@ output: pdf_document
 ---
 
 
-``` {r librariesAndData, echo=FALSE}
+``` {r librariesAndData, echo=FALSE, warning=FALSE}
 library(datasets); library(reshape2); library(ggplot2);
 data(ToothGrowth)
 ```
