@@ -16,14 +16,14 @@ This analysis shall look into the ToothGrowth dataset provided within datasets p
 
 ## Exploratory Analysis
 
-``` {r exploratory1}
+``` {r exploratory1, warning=FALSE}
 str(ToothGrowth)
 unique(ToothGrowth$dose)
 ```
 
 The ToothGrowth dataset contains 60 observations, and 3 variables. The dose variable is numeric, however looking at the data it seems it can be changed to Factor since the values are discrete.
 
-``` {r exploratory2}
+``` {r exploratory2, warning=FALSE, message=FALSE}
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 analysisDataSet <- ToothGrowth
 dcast(analysisDataSet, supp + dose ~ ., length)
@@ -31,7 +31,7 @@ dcast(analysisDataSet, supp + dose ~ ., length)
 
 The table above describes the number of observations grouped by supp and dose. We have exactly 10 subjects for each combination of supp and dose. The analysis shall try to determine if there is any difference between two supplements, "OJ" and "VC", at each dose level. Figure 1 shows the box plot of each group of observations.
 
-``` {r exploratory3, echo=FALSE, fig.height=4}
+``` {r exploratory3, echo=FALSE, fig.height=4, warning=FALSE}
 p <- ggplot(analysisDataSet, aes(factor(supp), len))
 p <- p + facet_wrap( ~ dose, nrow=1)
 p <- p + ggtitle("Length of Odontoblasts by Supplement and Dose")
