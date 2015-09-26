@@ -29,13 +29,13 @@ analysisDataSet <- ToothGrowth
 dcast(analysisDataSet, supp + dose ~ ., length)
 ```
 
-The table above describes the number of observations grouped by supp and dose. We have exactly 10 subjects for each combination of supp and dose. The analysis shall try to determine if there is any difference between two supplements, "OJ" and "VC", at each dose level. Figure 1 shows the box plot of each group of observations.
+The table above describes the number of observations grouped by supp and dose. We have exactly 10 subjects for each combination of supp and dose. The analysis shall try to determine if there is any difference between two method of deliveries, "OJ" and "VC", at each dose level. Figure 1 shows the box plot of each group of observations.
 
 ``` {r exploratory3, echo=FALSE, fig.height=4, warning=FALSE}
 p <- ggplot(analysisDataSet, aes(factor(supp), len))
 p <- p + facet_wrap( ~ dose, nrow=1)
-p <- p + ggtitle("Length of Odontoblasts by Supplement and Dose")
-p <- p + xlab("Supplement") + ylab("Length of Odontoblasts") 
+p <- p + ggtitle("Length of Odontoblasts by Method of Delivery and Dose")
+p <- p + xlab("Method of Delivery") + ylab("Length of Odontoblasts") 
 p <- p + geom_boxplot()
 print(p)
 
