@@ -1,0 +1,141 @@
+---
+title: 'Statistical Inference Project 2: ToothGrowth Analysis'
+author: "Andreas Hadimulyono"
+output: pdf_document
+---
+
+
+``` {r librariesAndData, echo=FALSE}
+library(datasets); library(reshape2); library(ggplot2);
+data(ToothGrowth)
+```
+
+## Overview
+
+This analysis shall look into the ToothGrowth dataset provided within datasets package in R, perform exploratory data analysis, and try to compare the tooth growth by supp and dose.
+
+## Exploratory Analysis
+
+``` {r exploratory1}
+str(ToothGrowth)
+unique(ToothGrowth$dose)
+```
+
+The ToothGrowth dataset contains 60 observations, and 3 variables. The dose variable is numeric, however looking at the data it seems it can be changed to Factor since the values are discrete.
+
+``` {r exploratory2}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+analysisDataSet <- ToothGrowth
+dcast(analysisDataSet, supp + dose ~ ., length)
+```
+
+The table above describes the number of observations grouped by supp and dose. We have exactly 10 subjects for each combination of supp and dose. The analysis shall try to determine if there is any difference between two supplements, "OJ" and "VC", at each dose level. Figure 1 shows the box plot of each group of observations.
+
+``` {r exploratory3, echo=FALSE, fig.height=4}
+p <- ggplot(analysisDataSet, aes(factor(supp), len))
+p <- p + facet_wrap( ~ dose, nrow=1)
+p <- p + ggtitle("Length of Odontoblasts by Supplement and Dose")
+p <- p + xlab("Supplement") + ylab("Length of Odontoblasts") 
+p <- p + geom_boxplot()
+print(p)
+
+```
+
+## Hypothesis
+
+The following null hypotheses are proposed:
+
+- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 0.5 milligram per day (H0_0.5: u = 0 and Ha_0.5: u != 0)
+- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 1 milligram per day (H0_1 = 0: u = 0 and Ha_1: u != 0)
+- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 2 milligram per day (H0_2 = 0 and Ha_2 != 0)
+
+## Assumptions
+
+We are going to make some assumptions on the dataset:
+
+- The underlying data are IID and Gaussian
+- The distribution of the underlying data is roughly symmetric and mound shaped
+- The variance between OJ and VC are assumed to be not equal
+- The data is not paired
+
+## T Tests and Conclusions
+
+As the dataset measures the difference in a measured variable among two different groups, the author decides to use T test to calculate the statistic. The codes used to perform the T test is described in the Appendix.
+
+### T Test for the group with 0.5mg Vitamin C per day
+
+``` {r tTest0.5, echo=FALSE}
+subset05 <- analysisDataSet[analysisDataSet$dose=="0.5",]
+t.test(subset05[subset05$supp =="OJ","len"], 
+       subset05[subset05$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
+
+From the T statistic above, we can reject the null hypothesis, which means at the dosage of 0.5mg/day, the method of delivery is likely to make a difference to the measured length of Odontoblasts.
+
+### T Test for the group with 1mg Vitamin C per day
+
+``` {r tTest1, echo=FALSE}
+subset1 <- analysisDataSet[analysisDataSet$dose=="1",]
+t.test(subset1[subset1$supp =="OJ","len"], 
+       subset1[subset1$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
+
+From the T statistic above, we can reject the null hypothesis, which means at the dosage of 1mg/day, the method of delivery is likely to make a difference to the measured length of Odontoblasts.
+
+### T Test for the group with 2mg Vitamin C per day
+
+``` {r tTest2, echo=FALSE}
+subset2 <- analysisDataSet[analysisDataSet$dose=="2",]
+t.test(subset2[subset2$supp =="OJ","len"], 
+       subset2[subset2$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
+
+From the T test above, we fail to reject the null hypothesis, which means at the dosage of 2mg/day, the method of delivery is NOT likely to make a difference to the measured length of Odontoblasts.
+
+\newpage
+
+# APPENDIX
+
+T TEST CODES:
+
+### T test for 0.5mg/day 
+
+``` {r tTest0.5a, results='hide'}
+subset05 <- analysisDataSet[analysisDataSet$dose=="0.5",]
+t.test(subset05[subset05$supp =="OJ","len"], 
+       subset05[subset05$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
+
+### T test for 1mg/day 
+
+``` {r tTest1a, results='hide'}
+subset1 <- analysisDataSet[analysisDataSet$dose=="1",]
+t.test(subset1[subset1$supp =="OJ","len"], 
+       subset1[subset1$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
+
+### T test for 2mg/day 
+
+``` {r tTest2a, results='hide'}
+subset2 <- analysisDataSet[analysisDataSet$dose=="2",]
+t.test(subset2[subset2$supp =="OJ","len"], 
+       subset2[subset2$supp =="VC","len"],
+       var.equal = FALSE,
+       paired=FALSE)
+
+```
