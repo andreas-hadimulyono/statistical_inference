@@ -12,7 +12,7 @@ data(ToothGrowth)
 
 ## Overview
 
-This analysis shall look into the ToothGrowth dataset provided within datasets package in R, perform exploratory data analysis, and try to compare the tooth growth by supp and dose.
+This analysis shall look into the ToothGrowth dataset provided within datasets package in R, perform exploratory data analysis, and try to compare the tooth growth by method of delivery and dose.
 
 ## Exploratory Analysis
 
@@ -46,8 +46,8 @@ print(p)
 The following null hypotheses are proposed:
 
 - There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 0.5 milligram per day (H0_0.5: u = 0 and Ha_0.5: u != 0)
-- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 1 milligram per day (H0_1 = 0: u = 0 and Ha_1: u != 0)
-- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 2 milligram per day (H0_2 = 0 and Ha_2 != 0)
+- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 1 milligram per day (H0_1: u = 0 and Ha_1: u != 0)
+- There is no difference in effect to length of Odontoblasts between delivery method of OJ and VC at dose 2 milligram per day (H0_2: u = 0 and Ha_2: u != 0)
 
 ## Assumptions
 
